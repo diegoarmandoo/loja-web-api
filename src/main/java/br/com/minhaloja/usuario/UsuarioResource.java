@@ -53,7 +53,7 @@ public class UsuarioResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response criar(Usuario usuario){
-        int id;
+        long id;
         try {
             id = usuarioService.criar(usuario);
         } catch (Exception e) {
