@@ -1,6 +1,7 @@
 package br.com.minhaloja.usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UsuarioService {
     
@@ -27,6 +28,26 @@ public class UsuarioService {
 
     public List<Usuario> listar() throws Exception {
         return usuariorepo.findAll();
+    }
+
+    public Usuario atualizar(Usuario usuario) throws Exception {
+        return usuariorepo.getById(usuario.getId()).map(u -> {
+            u.setNome(usuario.getNome());
+            u.setSenha(usuario.getSenha());
+            u.setEmail(usuario.getEmail());
+            usuariorepo.update(u);
+            return u;
+        }).orElseThrow(() -> new UsuarioNaoExisteException());
+    }
+
+    public void deletar(long id) throws Exception {
+        Optional<Usuario> usuario = usuariorepo.getById(id);
+        if (usuario.isPresent()) {
+            usuariorepo.delete(usuario.get().getId());
+        }
+        else{
+            throw new UsuarioNaoExisteException();
+        }
     }
 
 }

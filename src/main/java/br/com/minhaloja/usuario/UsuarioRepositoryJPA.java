@@ -19,7 +19,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository {
     @SuppressWarnings("unchecked")
     @Override
     public List<Usuario> findAll() {
-        return em.createQuery("from Usuario").getResultList();
+        return em.createQuery("from Usuario").getResultList();  
     }
 
     @Override
@@ -40,14 +40,17 @@ public class UsuarioRepositoryJPA implements UsuarioRepository {
 
     @Override
     public Usuario update(Usuario usuario) {
-        // TODO Auto-generated method stub
-        return null;
+        em.getTransaction().begin();
+        usuario = em.merge(usuario);
+        em.getTransaction().commit();
+        return usuario;
     }
 
     @Override
-    public void delete(Usuario usuario) {
-        // TODO Auto-generated method stub
-        
+    public void delete(Long id) {
+        em.getTransaction().begin();
+        em.remove(em.find(Usuario.class, id));
+        em.getTransaction().commit();
     }
     
 }

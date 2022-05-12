@@ -8,7 +8,7 @@ public interface UsuarioRepository {
     Optional <Usuario> getById(Long id);
 	Usuario save(Usuario usuario);
 	Usuario update(Usuario usuario);
-	void delete(Usuario usuario);
+	void delete(Long id);
 	List<Usuario> findAll();
 
 }
